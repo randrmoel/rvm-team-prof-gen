@@ -1,0 +1,32 @@
+{
+  "name": "rvm-team-prof-gen",
+  "version": "1.0.0",
+  "description": "Team Profile Generator",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "inquirer": "^7.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/randrmoel/rvm-team-prof-gen.git"
+  },
+  "keywords": [
+    "profile",
+    "generator",
+    "npm"
+  ],
+  "author": "Robert Moel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/randrmoel/rvm-team-prof-gen/issues"
+  },
+  "homepage": "https://github.com/randrmoel/rvm-team-prof-gen#readme"
+}
