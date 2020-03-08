@@ -43,8 +43,6 @@ describe("Manager", () =>{
             const err = new Error("Expected parameter 'officenum' to be a non-empty number");
             expect(cb).toThrowError(err);
         });
-
-
     });
 
     describe("getName", () =>{
