@@ -1,14 +1,16 @@
 const fs = require("fs");
-/*const util = require("util"); */
 const inq = require("inquirer");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const render = require("./lib/htmlRenderer")
+require('events').EventEmitter.prototype._maxListeners = 100;
 
+
+// initialize teamList
 var teamList = [];
 
-// this are all for use with the "when" keyword
+// these are all for use with the "when" keyword
 const validStr = async (inName) =>{
     if(inName.length===0){
         return "Name cannot be blank"
@@ -16,6 +18,7 @@ const validStr = async (inName) =>{
     return true;
 }
 
+//Check for a valid number
 const validNum = async(inNum) =>{
     if(isNaN(inNum) || inNum<=0){
         return "ID or Room Number not valid"
@@ -23,6 +26,7 @@ const validNum = async(inNum) =>{
     return true;
 }
 
+// check for an email form
 const validEmail = async(inEmail) =>{
     const re = /\S+@\S+\.\S+/;
     if (typeof inEmail !== "string" || !inEmail.trim().length || !re.test(inEmail)){
@@ -31,43 +35,34 @@ const validEmail = async(inEmail) =>{
     return true;    
 }
 
-const mngrCheck = async(ans) =>{
-    if(ans.teamMemType === "Manager") return true
-    else return false
-}
-
+// for "when" checks to show question
 const engrCheck = async(ans) =>{
     if(ans.teamMemType === "Engineer") return true
     else return false
 }
 
+//for intern checks to show intern question
 const intrCheck = async(ans) =>{
     if(ans.teamMemType === "Intern") return true
     else return false
 }
 
-const doneCheck = async(ans) => {
-    if(ans.teamMemType === "Done") return false
-    else return true
-}
 
+//Manager Questions, asked once
 const QManager = [{
     name:"name", 
-    when: doneCheck,
     type:"input",
     message: "Please enter Manager's name",
     validate: validStr
 },
 {
     name:"id",
-    when: doneCheck,
     type:"number",
     message:"Please enter Manager ID number",
     validate: validNum
 },
 {
     name: "email",
-    when: doneCheck,
     message: "Please enter a valid email address",
     validate: validEmail
 },
@@ -77,6 +72,8 @@ const QManager = [{
     message: "Please enter your office number",
 }]
 
+
+//Member questions
 const QMembers = [{
     name:"teamMemType",
     message: "Please select a team member type",
@@ -115,6 +112,7 @@ const QMembers = [{
     validate: validStr
 }]
 
+//Questions to continue or build html
 const QDone = 
 [
     {
@@ -125,6 +123,8 @@ const QDone =
     }
 ]
 
+//Add member function, calls member questions creates class instance and adds
+// to member list
 function AddMember(){
 inq
     .prompt(QMembers).then(function(ans2){
@@ -143,6 +143,8 @@ inq
     });
 }
 
+// Add manager function, called only once
+
 function AddManager(){
     inq
     .prompt(QManager)
@@ -153,6 +155,8 @@ function AddManager(){
     })
 }
 
+
+// Choice questions, continue or done
 function MakeChoice(){
     inq
     .prompt(QDone)
@@ -163,17 +167,8 @@ function MakeChoice(){
     });
 };
 
-addMgr = false;
-function MakeTeam(){
-    if(!addMgr) {
-        addMgr = true;
-        AddManager();
-    }
-    else {
-        AddMember();
-    }
-}
 
+// build HTML call code snippets and then write HTML
 function BuildHTML(){
     out = render(teamList);
     fs.writeFile('./output/team.html', out, function (err) {
@@ -182,4 +177,6 @@ function BuildHTML(){
       });
     
 }
-MakeTeam();
+
+//starts the ball rolling
+AddManager();
