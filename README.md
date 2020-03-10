@@ -1,6 +1,6 @@
 ## Team Profile Generator
 
-<img src = "https://img.shields.io/badge/license-GPL>3.0-green.svg" alt ="badge" width ="60"/>        
+<img src = "https://img.shields.io/badge/license-MIT-green.svg" alt ="badge" width ="60"/>        
 
 ## Description
 This program creates an html file with team members from a series of questions
