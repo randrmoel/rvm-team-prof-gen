@@ -69,7 +69,7 @@ const QManager = [{
 {
     name: "officenum",
     type:"number",
-    message: "Please enter your office number",
+    message: "Please enter Manager office number",
 }]
 
 
@@ -84,7 +84,7 @@ const QMembers = [{
 {
     name:"name", 
     type:"input",
-    message: "Please enter your name",
+    message: "Please enter a name",
     validate: validStr
 },
 {
@@ -102,13 +102,13 @@ const QMembers = [{
     name:"github",
     when: engrCheck,
     type:"input",
-    message:"Please enter your github username",
+    message:"Please enter Engineer's github username",
     validate: validStr
 },
 {
     name:"school",
     when:intrCheck,
-    message: "Please enter your school",
+    message: "Please enter Intern's school",
     validate: validStr
 }]
 
