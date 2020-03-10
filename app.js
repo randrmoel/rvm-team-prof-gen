@@ -1,13 +1,10 @@
 const fs = require("fs");
-const util = require("util");
+/*const util = require("util"); */
 const inq = require("inquirer");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
-
-function concatJSON(json1, json1){
-    return JSON.stringify(JSON.parse(json1).concat(JSON.parse(json2)));
-}
+const render = require("./lib/htmlRenderer")
 
 var teamList = [];
 
@@ -142,7 +139,6 @@ inq
                 break;
         }
 
-        console.log(teamList);
         MakeChoice();
     });
 }
@@ -151,7 +147,6 @@ function AddManager(){
     inq
     .prompt(QManager)
     .then(function(ans3){
-        console.log(ans3);
         mgr = new Manager(ans3.name, ans3.id, ans3.email,ans3.officenum);
         teamList.push(mgr);
         MakeChoice();
@@ -164,7 +159,7 @@ function MakeChoice(){
     .then(function(ans4){
         if(!ans4.done){
             BuildHTML();
-        } else MakeTeam();
+        } else AddMember();
     });
 };
 
@@ -180,8 +175,11 @@ function MakeTeam(){
 }
 
 function BuildHTML(){
-    console.log("Building HTML");
-    console.log(teamList);
+    out = render(teamList);
+    fs.writeFile('./output/team.html', out, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+    
 }
-
 MakeTeam();
